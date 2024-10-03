@@ -1,0 +1,26 @@
+image: ghcr.io/vioneta/{arch}-hassio-audio
+build_from:
+  aarch64: ghcr.io/home-assistant/aarch64-base:3.19
+  armhf: ghcr.io/home-assistant/armhf-base:3.19
+  armv7: ghcr.io/home-assistant/armv7-base:3.19
+  amd64: ghcr.io/home-assistant/amd64-base:3.19
+  i386: ghcr.io/home-assistant/i386-base:3.19
+# codenotary:
+#   signer: notary@home-assistant.io
+#   base_image: notary@home-assistant.io
+# cosign:
+#   base_identity: https://github.com/home-assistant/docker-base/.*
+#   identity: https://github.com/home-assistant/plugin-audio/.*
+args:
+  ALSA_LIB_VERSION: 1.2.10
+  ALSA_TOOLS_VERSION: 1.2.5
+  PULSE_VERSION: 16.1
+labels:
+  io.hass.type: audio
+  org.opencontainers.image.title: Vioneta Agro Audio Plugin
+  org.opencontainers.image.description: Vioneta Agro Supervisor plugin for Audio
+  org.opencontainers.image.source: https://github.com/Vioneta/plugin-audio
+  org.opencontainers.image.authors: The Vioneta Agro Authors
+  org.opencontainers.image.url: https://www.vioneta.com/
+  org.opencontainers.image.documentation: https://www.vioneta.com/docs/
+  org.opencontainers.image.licenses: Apache License 2.0

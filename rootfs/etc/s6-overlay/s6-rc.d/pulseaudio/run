@@ -1,0 +1,22 @@
+#!/usr/bin/with-contenv bashio
+# ==============================================================================
+# Start PulseAudio service
+# ==============================================================================
+declare pulse_args=()
+
+if bashio::fs.file_exists /data/pulse_audio.json; then
+    # Debug option
+    if bashio::var.true "$(bashio::jq /data/pulse_audio.json '.debug')"; then
+        pulse_args+=("-vvv")
+    fi
+else
+    bashio::log.warning "No supervisor configuration found"
+fi
+
+# Set env
+export PULSE_STATE_PATH="/data/states"
+export LD_PRELOAD="/usr/local/lib/libjemalloc.so.2"
+
+exec s6-notifyoncheck -d -s 300 -w 300 -n 0 \
+     pulseaudio --system --disallow-exit --exit-idle-time=-1 \
+                --disable-shm "${pulse_args[@]}"

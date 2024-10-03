@@ -1,0 +1,21 @@
+#!/usr/bin/with-contenv bashio
+# ==============================================================================
+# ALSA mixer service for new devices
+# ==============================================================================
+declare control
+
+while read -r line; do
+
+    # Check if new ALSA mixer connecting
+    if [[ "${line}" =~ add.*(controlC[0-9]) ]]; then
+        control=${BASH_REMATCH[1]}
+        bashio::log.info "Add ALSA mixer: ${control}"
+
+        # Run our soundconfig
+        soundconfig "${control}"
+    else
+        bashio::log.debug "Skip ${line}"
+        continue
+    fi
+
+done < <(udevadm monitor --subsystem-match=sound)
