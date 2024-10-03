@@ -75,7 +75,7 @@ jobs:
           args: |
             $BUILD_ARGS \
             --${{ matrix.arch }} \
-            --cosign \
+            # --cosign \
             --target /data \
             --generic ${{ needs.init.outputs.version }}
         # env:
